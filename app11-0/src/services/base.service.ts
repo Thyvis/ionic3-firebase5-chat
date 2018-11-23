@@ -32,8 +32,8 @@ export abstract class BaseService {
       return list
         .snapshotChanges()
         .pipe(
-          map(actions => actions.map(action => ({ key: action.payload.key, ...action.payload.val() })))
-          //map(actions => actions.map(action => ({ key: action.key, ...action.payload.val() })))
+          //map(actions => actions.map(action => ({ key: action.payload.key, ...action.payload.val() })))
+          map(actions => actions.map(action => ({ key: action.key, ...action.payload.val() })))
           //map(actions => actions.map(action => ({ $key: action.key, ...action.payload.val() })))
         )
 
@@ -43,8 +43,8 @@ export abstract class BaseService {
       return object
         .snapshotChanges()
         .pipe(
-          map(action => ({ key: action.payload.key, ...action.payload.val() }))
-          //map(action => ({ key: action.key, ...action.payload.val() }))
+          //map(action => ({ key: action.payload.key, ...action.payload.val() }))
+          map(action => ({ key: action.key, ...action.payload.val() }))
           //map(action => ({ $key: action.key, ...action.payload.val() }))
         )
 
