@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CustomLoggedHeaderComponent } from './custom-logged-header/custom-logged-header';
+import { CustomLoggedHeaderComponent } from './custom-logged-header/custom-logged-header.component';
 @NgModule({
 	declarations: [CustomLoggedHeaderComponent],
 	imports: [],

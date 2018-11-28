@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Loading, LoadingController, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserProvider } from './../../providers/user/user';
-import { AuthProvider } from '../../providers/auth/auth';
+import { UserProvider } from '../../providers/user/user.provider';
+import { AuthProvider } from '../../providers/auth/auth.provider';
 import { first } from 'rxjs/operators/first';
 import { HomePage } from '../home/home';
 

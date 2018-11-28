@@ -1,9 +1,9 @@
 import { first } from 'rxjs/operators/first';
-import { AuthProvider } from './../../providers/auth/auth';
+import { AuthProvider } from '../../providers/auth/auth.provider';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user.model';
-import { UserProvider } from '../../providers/user/user';
+import { UserProvider } from '../../providers/user/user.provider';
 
 @IonicPage()
 @Component({

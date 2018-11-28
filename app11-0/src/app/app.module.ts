@@ -22,11 +22,12 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { environment } from '../environments/environment';
 
 //Providers
-import { AuthProvider } from '../providers/auth/auth';
-import { UserProvider } from '../providers/user/user';
+import { AuthProvider } from '../providers/auth/auth.provider';
+import { ChatProvider } from '../providers/chat/chat.provider';
+import { UserProvider } from '../providers/user/user.provider';
 
 //Components
-import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header';
+import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
 
 //Pipes
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
@@ -66,6 +67,7 @@ import { CapitalizePipe } from '../pipes/capitalize.pipe';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
+    ChatProvider,
     UserProvider
   ]
 })

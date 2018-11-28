@@ -28,36 +28,23 @@ export abstract class BaseService {
         return Observable.throw(extractError(error));
     }
 
-    mapListKeys<T>(list: AngularFireList<T>): Observable<T[]> {
+    mapListKeys<T extends Object>(list: AngularFireList<T>): Observable<T[]> {
       return list
+          .snapshotChanges()
+          .pipe(
+            map(actions => actions.map(action => ({ key: action.key, ...Object.assign(action.payload.val()) })))
+          )
+    }
+
+    mapObjectKey<T extends Object>(object: AngularFireObject<T>): Observable<T> {
+      return object
         .snapshotChanges()
         .pipe(
-          //map(actions => actions.map(action => ({ key: action.payload.key, ...action.payload.val() })))
-          map(actions => actions.map(action => ({ key: action.key, ...action.payload.val() })))
-          //map(actions => actions.map(action => ({ $key: action.key, ...action.payload.val() })))
+          //map(action => ({ $key: action.key, ...Object.assign(action.payload.val()) }))
+          map(action => ({ key: action.key, ...Object.assign(action.payload.val()) }))
         )
 
     }
 
-    mapObjectKey<T>(object: AngularFireObject<T>): Observable<T> {
-      return object
-        .snapshotChanges()
-        .pipe(
-          //map(action => ({ key: action.payload.key, ...action.payload.val() }))
-          map(action => ({ key: action.key, ...action.payload.val() }))
-          //map(action => ({ $key: action.key, ...action.payload.val() }))
-        )
-
-    }
-
-    /* mapObjectKey2<T>(object: AngularFireObject<T>): Observable<T> {
-      return object
-      .snapshotChanges()
-      .pipe(
-        //map(changes => changes.(c => ({ key: c.payload.key, ...c.payload.val() })))
-        map(action => ({ key: action.payload.key, ...action.payload.val() }) )
-      )
-
-    } */
 
 }

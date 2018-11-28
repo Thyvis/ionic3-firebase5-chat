@@ -2,7 +2,7 @@ import { SignupPage } from './../signup/signup';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Loading, AlertController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthProvider } from '../../providers/auth/auth';
+import { AuthProvider } from '../../providers/auth/auth.provider';
 import { HomePage } from '../home/home';
 
 @IonicPage()
