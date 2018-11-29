@@ -54,16 +54,15 @@ export class HomePage {
       .subscribe((currentUser: User) => {
         console.log('currentUser', currentUser);
 
-
-        console.log('currentUser.key', currentUser.key);
-        console.log('recipientUser.key', recipientUser.key);
+        //console.log('currentUser.key', currentUser.key);
+        //console.log('recipientUser.key', recipientUser.key);
 
         this.chatProvider
           .mapObjectKey<Chat>(this.chatProvider.getDeepChat(currentUser.key, recipientUser.key))
           .pipe(first())
           .subscribe((chat: Chat) => {
 
-            //console.log('chat', chat);
+            console.log('chat', chat);
 
             if(!chat.title) {
               let timestamp: Object = firebase.database.ServerValue.TIMESTAMP;

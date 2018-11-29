@@ -43,7 +43,7 @@ export class ChatPage {
       .pipe(first())
       .subscribe((currentUser: User) => {
         this.sender = currentUser;
-        console.log('this.sender', this.sender);
+        //console.log('this.sender', this.sender);
 
     })
 
