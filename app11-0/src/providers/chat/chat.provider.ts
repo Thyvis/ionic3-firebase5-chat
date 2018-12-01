@@ -2,16 +2,36 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from '../../services/base.service';
 import { Chat } from '../../models/chat.model';
-import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireObject, AngularFireList } from '@angular/fire/database';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable()
 export class ChatProvider extends BaseService {
 
+  chats: AngularFireList<Chat>;
+
   constructor(
+    public afAuth: AngularFireAuth,
     public db: AngularFireDatabase,
     //public http: HttpClient
     ) {
-    super();
+      super();
+      this.setChats();
+  }
+
+  private setChats(): void {
+
+    this.afAuth.authState
+    .subscribe((authUser: firebase.User) => {
+      if(authUser) {
+        //console.log('authUser', authUser);
+        //console.log('authUser', authUser.uid);
+
+        this.chats = this.db.list<Chat>(`/ionic/udemy/app11-0/chats/${authUser.uid}`, ref => ref.orderByChild('timestamp'));
+
+      }
+    });
+
   }
 
   create(chat: Chat, userId1: string, userId2: string): Promise<void> {

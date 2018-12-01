@@ -40,7 +40,6 @@ export abstract class BaseService {
       return object
         .snapshotChanges()
         .pipe(
-          //map(action => ({ $key: action.key, ...Object.assign(action.payload.val()) }))
           map(action =>
             action.payload.val() ?
             ({ key: action.key, ...Object.assign(action.payload.val()) })

@@ -86,17 +86,10 @@ export class UserProvider extends BaseService{
 
   }
 
-  /* userExists0(username: string): Observable<boolean> {
-  //userExists(username: string): AngularFireList<boolean> {
-    return this.db.list(`/ionic/udemy/app11-0/users`, {
-      query: {
-        orderByChild: 'username',
-        equalTo: username
-      }
-    }).map((users: User[]) => {
-      return users.length > 0;
-    }).catch(this.handleObservableError);
+  get(userId: string): AngularFireObject<User> {
+    return this.db.object(`/ionic/udemy/app11-0/users/${userId}`)
 
-  } */
+  }
+
 
 }

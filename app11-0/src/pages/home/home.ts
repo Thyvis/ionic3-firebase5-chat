@@ -10,6 +10,8 @@ import { AuthProvider } from '../../providers/auth/auth.provider';
 import { ChatProvider } from '../../providers/chat/chat.provider';
 import { Chat } from '../../models/chat.model';
 import firebase from 'firebase';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'page-home',
@@ -19,7 +21,8 @@ export class HomePage {
 
   view: string = 'chats';
 
-  users;
+  chats: Observable<Chat[]>;
+  users: Observable<User[]>;
 
   constructor(
     public authProvider: AuthProvider,
@@ -35,8 +38,14 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-      //Aqui está a simplificação do código abaixo
-      this.users = this.userProvider.users;
+    //Aqui está a simplificação do código abaixo
+    this.users = this.userProvider.users;
+
+    this.chats = this.chatProvider
+    .mapListKeys<Chat>(this.chatProvider.chats)
+    .pipe(
+      map((chats: Chat[]) => chats.reverse())
+    )
 
   }
 
@@ -46,13 +55,13 @@ export class HomePage {
   }
 
   onChatCreate(recipientUser: User) {
-    console.log('recipientUser:', recipientUser);
+    //console.log('recipientUser:', recipientUser);
 
     this.userProvider
       .mapObjectKey<User>(this.userProvider.currentUser)
       .pipe(first())
       .subscribe((currentUser: User) => {
-        console.log('currentUser', currentUser);
+        //console.log('currentUser', currentUser);
 
         //console.log('currentUser.key', currentUser.key);
         //console.log('recipientUser.key', recipientUser.key);
@@ -83,6 +92,22 @@ export class HomePage {
     this.navCtrl.push(ChatPage, {
       //Usuário destinatário
       recipientUser: recipientUser
+    });
+
+  }
+
+  onChatOpen(chat: Chat): void {
+
+    let recipientUserId: string = chat.key
+
+    this.userProvider.mapObjectKey<User>(this.userProvider.get(recipientUserId))
+    .pipe(first())
+    .subscribe((user: User) => {
+
+      this.navCtrl.push(ChatPage, {
+        recipientUser: user
+      });
+
     });
 
   }
