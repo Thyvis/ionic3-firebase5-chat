@@ -25,6 +25,7 @@ import { environment } from '../environments/environment';
 import { AuthProvider } from '../providers/auth/auth.provider';
 import { ChatProvider } from '../providers/chat/chat.provider';
 import { UserProvider } from '../providers/user/user.provider';
+import { MessageProvider } from '../providers/message/message.provider';
 
 //Components
 import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
@@ -68,6 +69,7 @@ import { CapitalizePipe } from '../pipes/capitalize.pipe';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     ChatProvider,
+    MessageProvider,
     UserProvider
   ]
 })
