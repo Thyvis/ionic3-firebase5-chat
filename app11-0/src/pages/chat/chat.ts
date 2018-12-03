@@ -8,7 +8,6 @@ import { UserProvider } from '../../providers/user/user.provider';
 import { AngularFireList } from '@angular/fire/database';
 import { Message } from '../../models/message.model';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import firebase from 'firebase';
 
 @IonicPage()
@@ -19,11 +18,12 @@ import firebase from 'firebase';
 export class ChatPage {
 
   //messages: string[] = []
-  //messages: AngularFireList<Message>;
+  messages: AngularFireList<Message>;
   //messagesList: AngularFireList<Message[]>;
-  messages;
-  messagesObservable: Observable<Message[]>;
+  //messages;
+  //messagesObservable: Observable<Message[]>;
   //messages: Observable<Message[]>;
+  viewMessages: Observable<Message[]>;
 
   newMessage: string = '';
 
@@ -60,70 +60,34 @@ export class ChatPage {
       this.sender = currentUser;
       //console.log('this.sender', this.sender);
 
+      this.messages = this.messageProvider.getMessages(this.sender.key, this.recipient.key);
+      //console.log('this.messages', this.messages);
 
-      /* ---------Aqui recebi as mensagens como lista e em seguida fiz um observable a partir dela---- */
 
-      //Obtive a lista de mensagens ou referência
-      this.messages = this.messageProvider.getMessages1(this.sender.key, this.recipient.key);
+      this.viewMessages = this.messageProvider.mapListKeys<Message>(this.messages);
+      //console.log('this.viewMessages', this.viewMessages);
 
-      console.log('this.messages sender -> recipient', this.messages);
+      this.viewMessages
+      .pipe(first())
+      .subscribe((messages: Message[]) => {
 
-      this.messages
-      .snapshotChanges()
-      .pipe(
-        map(actions => actions.map(action => ({ key: action.key, ...Object.assign(action.payload.val()) }) )),
-        first()
-      )
-      .subscribe((messages1: Message[]) => {
+        //console.log('messages', messages);
 
-        console.log('messages1', messages1);
+        if(messages.length === 0) {
+          this.messages = this.messageProvider.getMessages(this.recipient.key, this.sender.key);
 
-        if(messages1.length === 0) {
+          //Não sei se será preciso fazer isso essa parte para se inscrever novamente no caminho inverso
+          this.viewMessages = this.messageProvider.mapListKeys<Message>(this.messages);
 
-          console.log('messages1.length', messages1.length);
+          this.viewMessages
+          .pipe(first())
+          .subscribe((messages: Message[]) => {
+            //console.log('messages1', messages);
+          });
 
-          this.messages = this.messageProvider.getMessages1(this.recipient.key, this.sender.key);
-
-          console.log('this.messages recipient -> sender', this.messages);
         }
 
       });
-
-      /* this.messagesObservable = this.messageProvider.getMessages2(this.sender.key, this.recipient.key);
-      console.log('this.messagesObservable sender -> recipient', this.messagesObservable);
-
-      this.messagesObservable
-      .subscribe((messages2: Message[]) => {
-
-        console.log('messages2', messages2);
-
-        if(messages2.length === 0) {
-
-          console.log('messages2.length', messages2.length);
-
-          this.messagesObservable = this.messageProvider.getMessages2(this.recipient.key, this.sender.key);
-
-          console.log('this.messagesObservable recipient -> sender', this.messagesObservable);
-        }
-
-      }); */
-
-      /* this.messages = this.messageProvider
-      .mapListKeys<Message[]>(this.messageProvider.getMessages3(this.sender.key, this.recipient.key))
-      .subscribe((messages3: Message[]) => {
-
-        console.log('messages3', messages3);
-
-        if(messages3.length === 0) {
-
-          console.log('messages3.length', messages3.length);
-
-          this.messagesObservable = this.messageProvider.getMessages3(this.recipient.key, this.sender.key);
-
-          console.log('this.messagesObservable recipient -> sender', this.messagesObservable);
-        }
-
-      }); */
 
     });
 
@@ -132,21 +96,21 @@ export class ChatPage {
   sendMessage(newMessage: string) {
     console.log('newMessage', newMessage);
 
-    //this.messages.push(newMessage);
-
     if(newMessage) {
 
-      let timestamp: Object = firebase.database.ServerValue.TIMESTAMP;
+      let currentTimestamp: Object = firebase.database.ServerValue.TIMESTAMP;
 
       this.messageProvider.createMessage(
         new Message(
           this.sender.key,
           newMessage,
-          timestamp
-        ),
-        this.messagesObservable
+          currentTimestamp
+          ),
+          this.messages
       );
+
     }
+
 
   }
 
