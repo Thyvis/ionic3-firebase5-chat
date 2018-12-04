@@ -38,6 +38,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+
     //Aqui está a simplificação do código abaixo
     this.users = this.userProvider.users;
 
@@ -46,6 +47,50 @@ export class HomePage {
     .pipe(
       map((chats: Chat[]) => chats.reverse())
     )
+
+  }
+
+  filterItems(event: any): void {
+
+    let searchTerm: string = event.target.value;
+
+    //console.log('Busca', searchTerm);
+    this.users = this.userProvider.users;
+
+    this.chats = this.chatProvider
+    .mapListKeys<Chat>(this.chatProvider.chats)
+    .pipe(
+      map((chats: Chat[]) => chats.reverse())
+    )
+
+    if(searchTerm) {
+
+      switch(this.view) {
+
+        case 'chats':
+          this.chats = this.chats
+          .pipe(
+            map(
+              (chats: Chat[]) =>
+              chats.filter((chat: Chat) =>
+              (chat.title && chat.title.toLowerCase().indexOf(searchTerm.toLocaleLowerCase()) > -1))
+            )
+          );
+          break;
+
+        case 'users':
+          this.users = this.users
+          .pipe(
+            map(
+              (users: User[]) =>
+              users.filter((user: User) =>
+              (user.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 ))
+            )
+          );
+          break;
+      }
+
+    }
 
   }
 
@@ -71,7 +116,7 @@ export class HomePage {
           .pipe(first())
           .subscribe((chat: Chat) => {
 
-            console.log('chat', chat);
+            //console.log('chat', chat);
 
             if(!chat.title) {
               let timestamp: Object = firebase.database.ServerValue.TIMESTAMP;

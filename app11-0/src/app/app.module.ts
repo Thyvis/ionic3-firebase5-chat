@@ -29,9 +29,13 @@ import { MessageProvider } from '../providers/message/message.provider';
 
 //Components
 import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
+import { MessageBoxComponent } from '../components/message-box/message-box.component';
 
 //Pipes
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
+
+//Módulos
+//import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,7 @@ import { CapitalizePipe } from '../pipes/capitalize.pipe';
     ChatPage,
     CustomLoggedHeaderComponent,
     HomePage,
+    MessageBoxComponent,
     MyApp,
     SigninPage,
     SignupPage
@@ -53,7 +58,8 @@ import { CapitalizePipe } from '../pipes/capitalize.pipe';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     AngularFireDatabaseModule,
-    AngularFireFunctionsModule
+    AngularFireFunctionsModule,
+    //CommonModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
