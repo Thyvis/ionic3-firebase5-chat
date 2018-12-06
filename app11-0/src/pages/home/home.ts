@@ -1,7 +1,7 @@
 import { ChatPage } from './../chat/chat';
 import { UserProvider } from '../../providers/user/user.provider';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { first } from 'rxjs/operators/first';
 
 import { SignupPage } from './../signup/signup';
@@ -27,6 +27,7 @@ export class HomePage {
   constructor(
     public authProvider: AuthProvider,
     public chatProvider: ChatProvider,
+    public menuController: MenuController,
     public navCtrl: NavController,
     public userProvider: UserProvider
     ) {
@@ -47,6 +48,8 @@ export class HomePage {
     .pipe(
       map((chats: Chat[]) => chats.reverse())
     )
+
+    this.menuController.enable(true, 'user-menu');
 
   }
 

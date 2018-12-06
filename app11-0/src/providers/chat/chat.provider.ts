@@ -45,4 +45,19 @@ export class ChatProvider extends BaseService {
 
   }
 
+  updatePhoto(chat: AngularFireObject<Chat>, chatPhoto: string, recipientUserPhoto: string): Promise<boolean> {
+    if(chatPhoto != recipientUserPhoto) {
+      return chat.update({
+        photo: recipientUserPhoto
+      })
+      .then(() => {
+        return true;
+      })
+      .catch(this.handlePromiseError);
+    }
+
+    return Promise.resolve(false);
+
+  }
+
 }

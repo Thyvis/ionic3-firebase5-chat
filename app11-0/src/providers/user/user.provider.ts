@@ -6,6 +6,7 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angula
 import { User } from '../../models/user.model';
 import { BaseService } from '../../services/base.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { FirebaseApp } from '@angular/fire/firebase.app.module';
 
 
 @Injectable()
@@ -22,7 +23,8 @@ export class UserProvider extends BaseService{
   constructor(
     //public http: HttpClient
     public db: AngularFireDatabase,
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    public firebaseApp: FirebaseApp
   ) {
 
     super();
@@ -35,6 +37,12 @@ export class UserProvider extends BaseService{
     return this.db.object(`/ionic/udemy/app11-0/users/${uuid}`)
       .set(user)
       .catch(this.handlePromiseError);
+  }
+
+  edit(user: {name: string, username: string, photo: string}): Promise<void>{
+      return this.currentUser.update(user)
+      .catch(this.handlePromiseError);
+
   }
 
   private listenAuthState(): void {
@@ -88,6 +96,15 @@ export class UserProvider extends BaseService{
 
   get(userId: string): AngularFireObject<User> {
     return this.db.object(`/ionic/udemy/app11-0/users/${userId}`)
+
+  }
+
+  uploadPhoto(file: File, userId: string): firebase.storage.UploadTask {
+    return this.firebaseApp
+    .storage()
+    .ref()
+    .child(`/ionic/udemy/app11-0/users/${userId}`)
+    .put(file);
 
   }
 

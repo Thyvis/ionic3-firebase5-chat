@@ -3,15 +3,15 @@ import { BaseComponent } from '../base.component';
 import { AlertController, App, MenuController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth.provider';
 import { User } from '../../models/user.model';
+import { UserProfilePage } from '../../pages/user-profile/user-profile';
 
 @Component({
-  selector: 'custom-logged-header',
-  templateUrl: 'custom-logged-header.component.html'
+  selector: 'user-menu',
+  templateUrl: 'user-menu.component.html'
 })
-export class CustomLoggedHeaderComponent extends BaseComponent {
+export class UserMenuComponent extends BaseComponent {
 
-  @Input() title: string;
-  @Input() user: User;
+  @Input('user') currentUser: User;
 
   constructor(
     public alertController: AlertController,
@@ -20,6 +20,12 @@ export class CustomLoggedHeaderComponent extends BaseComponent {
     public menuController: MenuController
   ) {
     super(alertController, app, authProvider, menuController);
+
+  }
+
+  onProfile(): void {
+    this.navController.push(UserProfilePage);
+
   }
 
 }

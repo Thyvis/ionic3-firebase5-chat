@@ -73,6 +73,16 @@ export class ChatPage {
       //console.log('this.chat1', this.chat1);
       //console.log('this.chat2', this.chat2);
 
+      if(this.recipient.photo) {
+        this.chatProvider
+        .mapObjectKey(this.chat1)
+        .pipe(first())
+        .subscribe((chat: Chat) => {
+          this.chatProvider.updatePhoto(this.chat1, chat.photo, this.recipient.photo);
+        });
+
+      }
+
       let doSubscription = () => {
 
         this.viewMessages = this.messageProvider.mapListKeys<Message>(this.messages);

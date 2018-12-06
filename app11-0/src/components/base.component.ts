@@ -29,6 +29,7 @@ export abstract class BaseComponent implements OnInit {
             this.authProvider.logOut()
               .then(() => {
                 this.navController.setRoot(SigninPage);
+                this.menuController.enable(false, 'user-menu');
               });
           }
         },

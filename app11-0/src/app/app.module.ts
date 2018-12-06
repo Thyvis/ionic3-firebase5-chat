@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -30,9 +30,13 @@ import { MessageProvider } from '../providers/message/message.provider';
 //Components
 import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
 import { MessageBoxComponent } from '../components/message-box/message-box.component';
+import { UserInfoComponent } from '../components/user-info/user-info.component';
+import { UserMenuComponent } from '../components/user-menu/user-menu.component';
 
 //Pipes
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { ProgressBarComponent } from '../components/progress-bar/progress-bar.component';
 
 //Módulos
 //import { CommonModule } from '@angular/common';
@@ -45,8 +49,12 @@ import { CapitalizePipe } from '../pipes/capitalize.pipe';
     HomePage,
     MessageBoxComponent,
     MyApp,
+    ProgressBarComponent,
     SigninPage,
-    SignupPage
+    SignupPage,
+    UserInfoComponent,
+    UserMenuComponent,
+    UserProfilePage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +75,8 @@ import { CapitalizePipe } from '../pipes/capitalize.pipe';
     HomePage,
     MyApp,
     SigninPage,
-    SignupPage
+    SignupPage,
+    UserProfilePage
   ],
   providers: [
     StatusBar,
@@ -77,6 +86,10 @@ import { CapitalizePipe } from '../pipes/capitalize.pipe';
     ChatProvider,
     MessageProvider,
     UserProvider
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    //NO_ERRORS_SCHEMA
   ]
 })
 export class AppModule {}
