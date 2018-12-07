@@ -29,7 +29,7 @@ export class SigninPage {
       });
   }
 
-  onHomePage(): void {
+  /* onHomePage(): void {
     this.navCtrl.push(HomePage)
       .then((hasAccess: boolean) => {
         console.log('Autorizado: ', hasAccess);
@@ -38,11 +38,11 @@ export class SigninPage {
         console.log('Não autorizado: ', err);
 
       });
-  }
+  } */
 
-  onLogOut(): void {
+  /* onLogOut(): void {
     this.authProvider.logOut();
-  }
+  } */
 
   onSignup() {
     this.navCtrl.push(SignupPage);
