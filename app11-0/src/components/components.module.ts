@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+//
+import { IonicModule } from 'ionic-angular';
+import { MyApp } from '../app/app.component';
 @NgModule({
 	declarations: [
     CustomLoggedHeaderComponent,
@@ -14,14 +17,17 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
     ProgressBarComponent
   ],
 	imports: [
-    CommonModule
+    CommonModule,
+    //Tive que adicionar esse módulo pra chamar o app.module
+    IonicModule.forRoot(MyApp)
   ],
   exports: [
     CustomLoggedHeaderComponent,
     MessageBoxComponent,
     UserInfoComponent,
     UserMenuComponent,
-    ProgressBarComponent],
+    ProgressBarComponent
+  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     //NO_ERRORS_SCHEMA

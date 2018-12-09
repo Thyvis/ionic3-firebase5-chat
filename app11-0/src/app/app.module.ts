@@ -28,33 +28,41 @@ import { UserProvider } from '../providers/user/user.provider';
 import { MessageProvider } from '../providers/message/message.provider';
 
 //Components
-import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
-import { MessageBoxComponent } from '../components/message-box/message-box.component';
-import { UserInfoComponent } from '../components/user-info/user-info.component';
-import { UserMenuComponent } from '../components/user-menu/user-menu.component';
+//import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
+//import { MessageBoxComponent } from '../components/message-box/message-box.component';
+//import { UserInfoComponent } from '../components/user-info/user-info.component';
+//import { UserMenuComponent } from '../components/user-menu/user-menu.component';
+//import { ProgressBarComponent } from '../components/progress-bar/progress-bar.component';
 
 //Pipes
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
-import { ProgressBarComponent } from '../components/progress-bar/progress-bar.component';
 
 //Módulos
 //import { CommonModule } from '@angular/common';
+import { ComponentsModule } from '../components/components.module';
+import { ChatPageModule } from '../pages/chat/chat.module';
+import { SigninPageModule } from '../pages/signin/signin.module';
+import { SignupPageModule } from '../pages/signup/signup.module';
+import { UserProfilePageModule } from '../pages/user-profile/user-profile.module';
 
 @NgModule({
   declarations: [
     CapitalizePipe,
-    ChatPage,
-    CustomLoggedHeaderComponent,
     HomePage,
-    MessageBoxComponent,
     MyApp,
-    ProgressBarComponent,
-    SigninPage,
-    SignupPage,
-    UserInfoComponent,
-    UserMenuComponent,
-    UserProfilePage
+    //Páginas
+    //ChatPage,
+    //SigninPage,
+    //SignupPage,
+    //UserProfilePage
+
+    //Componentes
+    //CustomLoggedHeaderComponent,
+    //MessageBoxComponent,
+    //ProgressBarComponent,
+    //UserInfoComponent,
+    //UserMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +75,12 @@ import { ProgressBarComponent } from '../components/progress-bar/progress-bar.co
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     AngularFireDatabaseModule,
     AngularFireFunctionsModule,
-    //CommonModule
+    //CommonModule,
+    ComponentsModule,
+    ChatPageModule,
+    SigninPageModule,
+    SignupPageModule,
+    UserProfilePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
